@@ -118,6 +118,9 @@ async function genComponentExample(dir, name) {
             const rawCode = fse.readFileSync(fullPath, 'utf-8');
             tempCode[`${name}.${demoName}`] = rawCode;
             tempCode[`${name}.${demoName}-code`] = await highlight(rawCode);
+            
+            // 为 LLM 插件添加源代码，以便在 llms.txt 中包含 Vue 文件内容
+            demoContent.push(`\`\`\`vue\n${rawCode}\n\`\`\``);
 
             const dashMatchRegExp = new RegExp(`--${demoName}`, 'ig');
             const colonMatchRegExp = new RegExp(
